@@ -2,7 +2,7 @@
 
 import { createApp } from 'vue'
 import { Quasar } from 'quasar'
-
+import { router } from '../src/routes'
 import './index.css'
 
 
@@ -17,8 +17,10 @@ import 'quasar/src/css/index.sass'
 // and placed in same folder as main.js
 import App from './App.vue'
 
-const myApp = createApp(App)
 
+
+const myApp = createApp(App)
+myApp.use(router)
 myApp.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
 })

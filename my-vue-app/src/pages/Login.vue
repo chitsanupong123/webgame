@@ -1,0 +1,51 @@
+<template>
+  <q-page class="bg-[#778DA9]">
+      <img src="imge/back.png" alt="">
+    <div
+      class="w-full max-w-[900px] mx-auto p-5 text-[#FFFFFF] font-black text-lg"
+    >
+      <div class="my-5">อีเมล์</div>
+      <q-input
+        bg-color="white"
+        class="my-5"
+        rounded
+        outlined
+        v-model="email"
+        label="กรอกอีเมล์"
+      ></q-input>
+      <div class="my-5">รหัสผ่าน</div>
+      <q-input
+        bg-color="white"
+        class="my-5"
+        rounded
+        outlined
+        v-model="password"
+        label="กรอกรหัสผ่าน"
+      ></q-input>
+      <div class="flex justify-end"><span> ลืมรหัสผ่าน </span></div>
+      <div class="flex justify-center ">
+        <q-btn
+          class="my-2"
+          style="background: #0d1b2a"
+          unelevated
+          rounded
+          label="เข้าสู่ระบบ"
+        ></q-btn>
+      </div>
+    </div>
+  </q-page>
+</template>
+
+<script>
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+  setup() {
+    const email = ref('');
+    const password = ref('');
+    return { email, password };
+  },
+});
+</script>
+
+<style></style>
