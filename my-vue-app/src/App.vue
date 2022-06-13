@@ -1,7 +1,39 @@
-<script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './components/HelloWorld.vue'
+<script>
+import { useRoute, useRouter } from "vue-router";
+import { defineComponent, onMounted } from "vue";
+import { useOnsaveAccount } from "../src/pinia-store/account";
+import { auth } from "../src/main";
+
+export default defineComponent({
+  name: "App",
+
+  setup() {
+    const router = useRouter();
+    const route = useRoute();
+    const accountPinia = useOnsaveAccount();
+
+    onMounted(() => {
+      auth.onAuthStateChanged((user) => {
+        if (!user) {
+          console.log(user);
+          void router.replace("/");
+        } else {
+          console.log(user);
+          const userDetail = {
+            photo: user.photoURL,
+            name: user.displayName,
+            email: user.email,
+            uid: user.uid,
+          };
+          accountPinia.onSaveAccount(userDetail);
+
+          void router.replace("/");
+        }
+      });
+    });
+    return {};
+  },
+});
 </script>
 
 <template >

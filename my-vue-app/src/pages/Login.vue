@@ -1,6 +1,6 @@
 <template>
   <q-page class="bg-[#778DA9]">
-      <img src="imge/back.png" alt="">
+    <img src="imge/back.png" alt="" />
     <div
       class="w-full max-w-[900px] mx-auto p-5 text-[#FFFFFF] font-black text-lg"
     >
@@ -23,8 +23,9 @@
         label="กรอกรหัสผ่าน"
       ></q-input>
       <div class="flex justify-end"><span> ลืมรหัสผ่าน </span></div>
-      <div class="flex justify-center ">
+      <div class="flex justify-center">
         <q-btn
+        @click="login()"
           class="my-2"
           style="background: #0d1b2a"
           unelevated
@@ -37,13 +38,30 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
-
+import { defineComponent, ref, computed } from "vue";
+import { useOnsaveAccount } from "../pinia-store/account";
+import { LoginWithFirebase } from "../main";
 export default defineComponent({
   setup() {
-    const email = ref('');
-    const password = ref('');
-    return { email, password };
+    const email = ref("");
+    const password = ref("");
+    const accountPinia = useOnsaveAccount();
+    const account = computed(() => accountPinia.account);
+    console.log(account.value);
+
+    const login = async () => {
+      const user = await LoginWithFirebase(email.value, password.value);
+      if (user.user) {
+        const userDetail = {
+          name: user.user.email,
+          uid: user.user.uid,
+        };
+        accountPinia.onSaveAccount(userDetail);
+      }
+    };
+    
+
+    return { email, password ,login };
   },
 });
 </script>
