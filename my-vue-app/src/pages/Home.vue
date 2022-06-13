@@ -21,7 +21,7 @@
     </q-carousel>
     <div class="my-5 text-lg text-[#FFFFFF] font-black">เกม</div>
     <div class="flex flex-row justify-around">
-    <q-btn dense flat><img src="imge/rov.png" alt="" ></q-btn>
+    <q-btn dense flat><img src="imge/rov.png" alt="src/pages/Rov.vue" ></q-btn>
     <q-btn dense flat><img src="imge/LOL.png" alt="" ></q-btn>
     <q-btn dense flat><img src="imge/Hon.png" alt="" ></q-btn>
     <q-btn dense flat><img src="imge/Fifa.png" alt="" ></q-btn>
