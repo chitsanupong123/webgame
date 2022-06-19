@@ -4,8 +4,8 @@
       class="q-pa-md max-w-screen-xl w-full mx-auto text-[#FFFFFF] font-black text-[20px]"
     >
       <div class="flex gap-10 my-10 items-center">
-        <img src="imge/rov.png" alt="" class="" />
-        <span>ROV:MOBILE MOBA</span>
+        <img src="imge/LoL.png" alt="" class="" />
+        <span>League of Legends</span>
       </div>
       <div>
         <span>วิธีการชำระเงิน</span>

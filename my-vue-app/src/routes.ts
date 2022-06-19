@@ -26,10 +26,35 @@ const routes: RouteRecordRaw[] = [
         component: () => import('../src/pages/Rov.vue'),
       },
       {
+        name: 'LoL',
+        path: 'lol',
+        component: () => import('../src/pages/LoL.vue'),
+      },
+      {
+        name: 'Hon',
+        path: 'hon',
+        component: () => import('../src/pages/Hon.vue'),
+      },
+      {
+        name: 'Fifa',
+        path: 'fifa',
+        component: () => import('../src/pages/Fifa.vue'),
+      },
+      {
         name: 'Help',
         path: 'help',
         component: () => import('../src/pages/Help.vue'),
       },
+      {
+        name: 'Record',
+        path: 'record',
+        component: () => import('../src/pages/Record.vue'),
+      },
+      // {
+      //   name: 'Kbank',
+      //   path: 'kbank',
+      //   component: () => import('../src/pages/Kbank.vue'),
+      // },
     ],
   },
 ]

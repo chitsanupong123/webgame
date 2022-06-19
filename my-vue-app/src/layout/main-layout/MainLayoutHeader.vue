@@ -9,6 +9,7 @@
          <q-btn @click="$router.push({ path: '/' })" rounded label="หน้าหลัก" />
         <span>เติมเกม</span>
         <q-btn @click="$router.push({ path: 'help' })" rounded label="ช่วยเหลือ" />
+        <q-btn @click="$router.push({ path: 'record' })" rounded label="ประวัติ" />
       </div>
 
       <div class="ml-auto flex gap-5">
