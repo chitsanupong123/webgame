@@ -9,11 +9,11 @@
          <q-btn @click="$router.push({ path: '/' })" rounded label="หน้าหลัก" />
         <span>เติมเกม</span>
         <q-btn @click="$router.push({ path: 'help' })" rounded label="ช่วยเหลือ" />
-        <q-btn @click="$router.push({ path: 'record' })" rounded label="ประวัติ" />
       </div>
 
       <div class="ml-auto flex gap-5">
         <div v-if="account">
+          <q-btn @click="$router.push({ path: 'record' })" rounded label="ประวัติ" />
           <q-btn @click="logout()" rounded label="ออกจากระบบ" />
         </div>
         <div v-else>
