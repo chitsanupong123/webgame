@@ -1,6 +1,6 @@
 <template>
   <q-page class="bg-[#778DA9]">
-    <img src="imge/back.png" alt="" />
+    <img src="imge/back.png" alt="" @click="$router.push({ path: '/' })"/>
     <div
       class="w-full max-w-[900px] mx-auto p-5 text-[#FFFFFF] font-black text-lg"
     >
