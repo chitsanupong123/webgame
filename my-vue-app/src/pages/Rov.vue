@@ -52,9 +52,13 @@
 import { defineComponent, ref } from "vue";
 export default defineComponent({
   setup() {
-      const Truemoney = ref("")
+      const Truemoney = ref(true);
+      const Kbank = ref(false);
+      const Garena = ref(false);
     return {
       Truemoney,
+      Kbank,
+      Garena,
       group: ref(""),
 
 
