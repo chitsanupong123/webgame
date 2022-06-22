@@ -1,20 +1,22 @@
 // FILE: main.js
 
-import { createApp } from 'vue'
-import { Quasar } from 'quasar'
-import { router } from '../src/routes'
-import './index.css'
+import { createApp } from "vue";
+import { Quasar ,Dialog} from "quasar";
+import { router } from "../src/routes";
+import "./index.css";
 import { createPinia } from "pinia";
 
-import '@quasar/extras/material-icons/material-icons.css'
-import 'quasar/src/css/index.sass'
-import App from './App.vue'
+import "@quasar/extras/material-icons/material-icons.css";
+import "quasar/src/css/index.sass";
+import App from "./App.vue";
+
 // firebase
 import * as firebaseAuth from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { deleteDoc, setDoc, addDoc, doc } from "firebase/firestore";
 import { getStorage, getDownloadURL, uploadBytes, ref } from "firebase/storage";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyD_MkGSno-GaJX-ZLBLdKaW613ks3ris8U",
@@ -23,7 +25,7 @@ const firebaseConfig = {
   storageBucket: "appgame-c0f5a.appspot.com",
   messagingSenderId: "335584399999",
   appId: "1:335584399999:web:ddd3fbe89b0c151a58a54a",
-  measurementId: "G-R95E97FY8J"
+  measurementId: "G-R95E97FY8J",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -63,17 +65,19 @@ const RegistWithFirebase = async (email, password, name) => {
   }
 };
 
-export{auth , LoginWithFirebase , RegistWithFirebase}
+export { auth, LoginWithFirebase, RegistWithFirebase };
 
 // pinia----------------------------
 const pinia = createPinia();
-console.log('Test');
-const myApp = createApp(App)
+console.log("Test");
+const myApp = createApp(App);
 myApp.use(pinia);
-myApp.use(router)
+myApp.use(router);
+
+
 myApp.use(Quasar, {
-  plugins: {}, // import Quasar plugins and add here
-})
+  plugins: {Dialog}, // import Quasar plugins and add here
+});
 
 // Assumes you have a <div id="app"></div> in your index.html
-myApp.mount('#app')
+myApp.mount("#app");

@@ -27,6 +27,7 @@
         <q-btn @click="$router.push({path: 'LoL'})" dense flat><img src="imge/LOL.png" alt="src/pages/LoL.vue" /></q-btn>
         <q-btn @click="$router.push({path: 'Hon'})" dense flat><img src="imge/Hon.png" alt="src/pages/Hon.vue" /></q-btn>
         <q-btn @click="$router.push({path: 'Fifa'})" dense flat><img src="imge/Fifa.png" alt="src/pages/Fifa.vue" /></q-btn>
+        
       </div>
     </div>
   </q-page>
