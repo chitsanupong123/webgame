@@ -6,7 +6,7 @@ export const useOnsaveAccount = defineStore("account", () => {
 
   const onSaveAccount = (payload) => {
     account.value = payload;
-    console.log(account.value);
+    console.log(account.value)
   };
 
   return { account, onSaveAccount };

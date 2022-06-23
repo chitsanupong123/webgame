@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-full mx-auto">
+  <div class="max-w-full mx-auto  ">
     <q-btn @click="onSelectedMenu('kbank')" dense flat label=""
       ><img
         src="imge/mastercard.png"
@@ -21,11 +21,11 @@
         :style="selected == 'garena' ? 'width:300px;height300px' : ''"
         class="w-[200px]"
     /></q-btn>
-    <div class="flex flex-auto">
+    <div class="flex flex-row gap-96 ">
       <div class="q-pa-md my-16">
         <q-option-group :options="options" type="radio" v-model="group" />
       </div>
-      <div class="ml-[400px] my-16">
+      <div class=" my-16 ">
         <span>{{
           selected == "garena" || selected == "true"
             ? "ใส่เลขบัตรเงินสด"

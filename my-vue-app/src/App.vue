@@ -5,33 +5,19 @@ import { useOnsaveAccount } from "../src/pinia-store/account";
 import { auth } from "../src/main";
 
 export default defineComponent({
-  name: "App",
-
+  name: 'App',
   setup() {
     const router = useRouter();
     const route = useRoute();
-    const accountPinia = useOnsaveAccount();
-
     onMounted(() => {
       auth.onAuthStateChanged((user) => {
         if (!user) {
-          console.log(user);
-          void router.replace("/");
-        } else {
-          console.log(user);
-          const userDetail = {
-            photo: user.photoURL,
-            name: user.displayName,
-            email: user.email,
-            uid: user.uid,
-          };
-          accountPinia.onSaveAccount(userDetail);
-
-          void router.replace("/");
+          void router.replace('/login');
+        } else if (route.path == '/login' || route.path == '/register') {
+          void router.replace('/');
         }
       });
     });
-    return {};
   },
 });
 </script>

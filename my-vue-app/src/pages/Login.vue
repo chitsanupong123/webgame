@@ -47,13 +47,13 @@ export default defineComponent({
     const password = ref("");
     const accountPinia = useOnsaveAccount();
     const account = computed(() => accountPinia.account);
-    console.log(account.value);
 
     const login = async () => {
       const user = await LoginWithFirebase(email.value, password.value);
       if (user.user) {
         const userDetail = {
           name: user.user.email,
+          email: user.user.email,
           uid: user.user.uid,
         };
         accountPinia.onSaveAccount(userDetail);

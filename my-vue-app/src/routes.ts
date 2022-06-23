@@ -50,21 +50,21 @@ const routes: RouteRecordRaw[] = [
         path: 'record',
         component: () => import('../src/pages/Record.vue'),
       },
-      {
-        name: 'HomeAdmin',
-        path: 'homeAdmin',
-        component: () => import('../src/pages/HomeAdmin.vue'),
-      },
+      // {
+      //   name: 'HomeAdmin',
+      //   path: 'homeAdmin',
+      //   component: () => import('../src/pages/HomeAdmin.vue'),
+      // },
       {
         name: 'Notification',
         path: 'notification',
         component: () => import('../src/pages/Notification.vue'),
       },
-      // {
-      //   name: 'Kbank',
-      //   path: 'kbank',
-      //   component: () => import('../src/pages/Kbank.vue'),
-      // },
+      {
+        name: 'Admin',
+        path: 'Admin',
+        component: () => import('../src/pages/Admin.vue'),
+      },
     ],
   },
 ]
