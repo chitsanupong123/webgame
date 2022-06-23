@@ -3,19 +3,33 @@
     <div
       class="flex flex-row w-full p-5 bg-[#0D1B2A] items-center text-[#FFFFFF]"
     >
+      {{ account }}
       <div class="flex gap-6 items-center">
-        <img class="w-11" src="imge/Vector.png">
+        <img class="w-11" src="imge/Vector.png" />
         <span>BuyG</span>
-         <q-btn @click="$router.push({ path: '/' })" rounded label="หน้าหลัก" />
+        <q-btn @click="$router.push({ path: '/' })" rounded label="หน้าหลัก" />
         <span>เติมเกม</span>
-        <q-btn @click="$router.push({ path: 'help' })" rounded label="ช่วยเหลือ" />
-        <q-btn @click="$router.push({ path: 'homeAdmin' })" rounded label="admin" />
+        <q-btn
+          @click="$router.push({ path: 'help' })"
+          rounded
+          label="ช่วยเหลือ"
+        />
+        <q-btn
+          v-if="account?.email == 'admin@gmail.com'"
+          @click="$router.push({ path: 'Admin' })"
+          rounded
+          label="admin"
+        />
       </div>
 
       <div class="ml-auto flex gap-5">
         <div v-if="account">
-          <q-btn><img src="imge/bell.png" alt="" @click="$router.push({path: 'notification'})" class="w-7"></q-btn>
-          <q-btn @click="$router.push({ path: 'record' })" rounded label="ประวัติ" />
+          <!-- <q-btn><img src="imge/bell.png" alt="" @click="$router.push({path: 'notification'})" class="w-7"></q-btn> -->
+          <q-btn
+            @click="$router.push({ path: 'record' })"
+            rounded
+            label="ประวัติ"
+          />
           <q-btn @click="logout()" rounded label="ออกจากระบบ" />
         </div>
         <div v-else>
@@ -53,13 +67,11 @@ export default defineComponent({
         .then(() => console.log("Signed Out"))
         .catch((err) => alert(err.message));
 
-      location.reload();
+      accountPinia.onSaveAccount("");
     };
-
     onMounted(async () => {
       await auth.onAuthStateChanged((user) => {
         if (user) {
-          console.log(user);
           const userDetail = {
             name: user.displayName,
             email: user.email,
@@ -69,7 +81,7 @@ export default defineComponent({
         }
       });
     });
-
+    
     return { logout, account };
   },
 });
