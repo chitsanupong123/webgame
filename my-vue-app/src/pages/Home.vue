@@ -40,7 +40,8 @@ export default defineComponent({
   setup() {
     const slide = ref(1);
     const autoplay = ref(true);
-    return { slide, autoplay };
+    
+    return {  autoplay , slide};
   },
 });
 </script>

@@ -7,17 +7,27 @@
         <img src="imge/LoL.png" alt="" class="" />
         <span>League of Legends</span>
       </div>
-      <Pay/>
+      
+      <Pay :account="account" :name="name"/>
     </div>
   </q-page>
 </template>
 
 <script>
 import Pay from "../components/Pay.vue";
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref ,computed } from "vue";
+import { useOnsaveAccount } from "../pinia-store/account";
 export default defineComponent({
   components: { Pay },
-  setup() {},
+  setup() {
+    const accountPinia = useOnsaveAccount();
+    const account = computed(() => accountPinia.account);
+    const name = ref("LoL");
+    
+
+    return{account , name};
+  },
+  
 });
 </script>
 

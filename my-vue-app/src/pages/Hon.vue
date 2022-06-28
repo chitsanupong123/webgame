@@ -7,17 +7,24 @@
         <img src="imge/Hon.png" alt="" class="" />
         <span>Heroes of Newerth </span>
       </div>
-      <Pay/>
+      <Pay :account="account" :name="name" />
     </div>
   </q-page>
 </template>
 
 <script>
 import Pay from "../components/Pay.vue";
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref,computed } from "vue";
+import { useOnsaveAccount } from "../pinia-store/account";
 export default defineComponent({
-  components: {Pay},
-  setup() {},
+  components: { Pay },
+  setup() {
+    const accountPinia = useOnsaveAccount();
+    const account = computed(() => accountPinia.account);
+    const name = ref("Hon");
+
+    return { account, name };
+  },
 });
 </script>
 

@@ -53,6 +53,7 @@ const RegistWithFirebase = async (email, password, name) => {
   try {
     const provider = await firebaseAuth.createUserWithEmailAndPassword(
       auth,
+      name,
       email,
       password
     );
@@ -65,7 +66,38 @@ const RegistWithFirebase = async (email, password, name) => {
   }
 };
 
-export { auth, LoginWithFirebase, RegistWithFirebase };
+const createPaymentRequest = async (payload) => {
+  await addDoc(collection(db, "Admin"), { payload });
+};
+
+const createNotification = async (payload) => {
+  console.log("sdassd");
+  await addDoc(collection(db, "notifications"), { payload });
+};
+
+const deletePaymentRequest = async (id) => {
+  await deleteDoc(doc(db, "Admin", id));
+  // await setDoc(doc(db, "timeline"), payload);
+  // console.log("successed");
+};
+
+const fetchPaymentRequestData = async () => {
+  const data = collection(db, "Admin");
+  const newsList = await getDocs(data);
+  const paymentRequest = newsList.docs.map((doc) => doc.data());
+  const id = newsList.docs.map((doc) => doc.id);
+  paymentRequest.forEach((data, i) => (data.id = id[i]));
+  return { paymentRequest };
+};
+
+const fetchNotification = async () => {
+  const data = collection(db, "notifications");
+  const newsList = await getDocs(data);
+  const request = newsList.docs.map((doc) => doc.data());
+  return { request };
+};
+
+export { auth, LoginWithFirebase, RegistWithFirebase , createPaymentRequest ,fetchPaymentRequestData,createNotification,fetchNotification ,deletePaymentRequest};
 
 // pinia----------------------------
 const pinia = createPinia();

@@ -1,31 +1,32 @@
 <template>
-  <div class="max-w-full mx-auto  ">
-    <q-btn @click="onSelectedMenu('kbank')" dense flat label=""
+  <div class="max-w-full mx-auto ">
+    <q-btn @click="onSelectedMenu('mastercard')" dense flat label=""
       ><img
         src="imge/mastercard.png"
         alt=""
-        :style="selected == 'kbank' ? 'width:300px; height300px' : ''"
-        class="w-[200px]"
+        :style="selected == 'mastercard' ? 'width:250px; height250px' : ''"
+        class="w-[200px] rounded-[30px]"
     /></q-btn>
     <q-btn @click="onSelectedMenu('true')" dense flat label=""
       ><img
         src="imge/Tr.png"
         alt=""
-        :style="selected == 'true' ? 'width:300px; height300px' : ''"
+        :style="selected == 'true' ? 'width:250px; height250px' : ''"
         class="w-[200px]"
     /></q-btn>
+
     <q-btn @click="onSelectedMenu('garena')" dense flat label=""
       ><img
         src="imge/Garena.png"
         alt=""
-        :style="selected == 'garena' ? 'width:300px;height300px' : ''"
-        class="w-[200px]"
+        :style="selected == 'garena' ? 'width:250px;height250px' : ''"
+        class="w-[200px] rounded-[30px]"
     /></q-btn>
-    <div class="flex flex-row gap-96 ">
-      <div class="q-pa-md my-16">
+    <div class="flex flex-row gap-96">
+      <div class="q-pa-md my-16 ">
         <q-option-group :options="options" type="radio" v-model="group" />
       </div>
-      <div class=" my-16 ">
+      <div class="my-16">
         <span>{{
           selected == "garena" || selected == "true"
             ? "ใส่เลขบัตรเงินสด"
@@ -42,7 +43,8 @@
           rounded
           outlined
           v-model="text"
-          label="กรุณณากรอก"
+          maxlength="13"
+          label="กรุณณากรอกหมายเลข"
           class="w-[500px] bg-white rounded-full mt-5"
         />
         <q-btn
@@ -50,7 +52,7 @@
           label="ยืนยัน"
           class="mt-5 ml-[200px]"
           @click="showCustom"
-          :disable="Idgame && text? false : true"
+          :disable="Idgame && text ? false : true"
         />
       </div>
     </div>
@@ -60,18 +62,24 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { useQuasar, QSpinnerGears } from "quasar";
+import { createPaymentRequest } from "../main";
 export default defineComponent({
-  setup() {
-    const selected = ref("kbank");
+  props: {
+    account: { type: Object, default: () => {} },
+    name: String,
+  },
+  setup(props) {
+    const selected = ref("mastercard");
     const text = ref("");
     const Idgame = ref("");
+    const group = ref(null);
 
     const onSelectedMenu = (onSelected) => {
       selected.value = onSelected;
       console.log(selected.value);
     };
     const $q = useQuasar();
-    function showCustom() {
+    const showCustom = async () => {
       const dialog = $q.dialog({
         title: "Uploading...",
         dark: true,
@@ -106,21 +114,31 @@ export default defineComponent({
           });
         }
       }, 500);
-    }
+      const information = {
+        customer_name: props.account.email,
+        game_id: Idgame.value,
+        game_name: props.name,
+        payment: selected.value,
+        payment_id: text.value,
+        price: group.value,
+      };
+      console.log(information);
+      await createPaymentRequest(information);
+    };
     return {
       Idgame,
       showCustom,
       selected,
       onSelectedMenu,
       text,
-      group: ref(null),
+      group,
 
       options: [
-        { label: "$50", value: "bat", color: "black" },
-        { label: "$100", value: "friend", color: "black" },
-        { label: "$150", value: "upload", color: "black" },
-        { label: "$200", value: "load", color: "black" },
-        { label: "$300", value: "up", color: "black" },
+        { label: "$50", value: 50, color: "black" ,label:"คูปองx100"},
+        { label: "$100", value: 100, color: "black" },
+        { label: "$150", value: 150, color: "black" },
+        { label: "$200", value: 200, color: "black" },
+        { label: "$300", value: 300, color: "black" },
       ],
     };
   },

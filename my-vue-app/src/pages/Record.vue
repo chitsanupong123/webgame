@@ -1,120 +1,77 @@
 <template>
-  <q-page  class="bg-[#778DA9]">
-    <div class="q-pa-md">
-      <div class="my-5 text-lg text-[#FFFFFF] font-black">ประวัติการสั่งซื้อ</div>
-    <q-table
-      :rows="rows"
-      row-key="name"
-      class="w-full"
-    />
-  </div>
+  <q-page class="bg-[#778DA9]">
+    <div class="text-lg q-pa-md max-w-screen-xl w-auto mx-80">
+      การแจ้งเติมการเติมเงิน
+
+      <div v-if="userData">
+        <div
+          class="flex flex-col mx-auto p-5 text-stone-900 text-lg mt-5 w-full rounded-lg border-solid border-[3px] bg-white"
+          v-for="(data, index) in userData"
+          :key="index"
+        >
+          <table
+            class="border-separate border-spacing-2 border border-slate-400 bg-white w-full"
+          >
+            <thead>
+              <tr>
+                <th class="border border-slate-300 w-20">ชื่อผู้ใช้</th>
+                <th class="border border-slate-300 W-0">หมายเลขการเติมเงิน</th>
+                <th class="border border-slate-300">สถานะ</th>
+              </tr>
+              <tr>
+                <td class="border border-slate-300 w-20">
+                  {{ data.payload?.email }}
+                </td>
+                <td class="border border-slate-300 W-0">
+                  {{ data.payload?.payment_id }}
+                </td>
+                <td
+                  class="border border-slate-300"
+                  :class="
+                    data.payload?.message == 'ทำรายการสำเร็จ'
+                      ? 'text-green-500'
+                      : 'text-red-500'
+                  "
+                >
+                  {{ data.payload?.message }}
+                </td>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+      <div v-else><span>ยังไม่มีรายการ</span></div>
+    </div>
   </q-page>
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted, computed } from "vue";
+import { fetchNotification } from "../main";
+import { useOnsaveAccount } from "../pinia-store/account";
 
-const rows = [
-  {
-    เลขใบสั่งซื้อ: 'Frozen Yogurt',
-    เกม: 159,
-    แพ็คเก็จ: 6.0,
-    ไอดีเกม: 24,
-    วันสั่งซื้อ: 4.0,
-    ราคา: 87,
-    สถานะ: '14%',
-
-  },
-  {
-    เลขใบสั่งซื้อ: 'Frozen Yogurt',
-    เกม: 159,
-    แพ็คเก็จ: 6.0,
-    ไอดีเกม: 24,
-    วันสั่งซื้อ: 4.0,
-    ราคา: 87,
-    สถานะ: '14%',
-  },
-  {
-    เลขใบสั่งซื้อ: 'Arozen Yogurt',
-    เกม: 159,
-    แพ็คเก็จ: 6.0,
-    ไอดีเกม: 24,
-    วันสั่งซื้อ: 4.0,
-    ราคา: 87,
-    สถานะ: '14%',
-  },
-  {
-   เลขใบสั่งซื้อ: 'Frozen Yogurt',
-    เกม: 159,
-    แพ็คเก็จ: 6.0,
-    ไอดีเกม: 24,
-    วันสั่งซื้อ: 4.0,
-    ราคา: 87,
-    สถานะ: '14%',
-  },
-  {
-    เลขใบสั่งซื้อ: 'Frozen Yogurt',
-    เกม: 159,
-    แพ็คเก็จ: 6.0,
-    ไอดีเกม: 24,
-    วันสั่งซื้อ: 4.0,
-    ราคา: 87,
-    สถานะ: '14%',
-  },
-  {
-   เลขใบสั่งซื้อ: 'Frozen Yogurt',
-    เกม: 159,
-    แพ็คเก็จ: 6.0,
-    ไอดีเกม: 24,
-    วันสั่งซื้อ: 4.0,
-    ราคา: 87,
-    สถานะ: '14%',
-  },
-  {
-   เลขใบสั่งซื้อ: 'Frozen Yogurt',
-    เกม: 159,
-    แพ็คเก็จ: 6.0,
-    ไอดีเกม: 24,
-    วันสั่งซื้อ: 4.0,
-    ราคา: 87,
-    สถานะ: '14%',
-  },
-  {
-   เลขใบสั่งซื้อ: 'Frozen Yogurt',
-    เกม: 159,
-    แพ็คเก็จ: 6.0,
-    ไอดีเกม: 24,
-    วันสั่งซื้อ: 4.0,
-    ราคา: 87,
-    สถานะ: '14%',
-  },
-  {
-    เลขใบสั่งซื้อ: 'Frozen Yogurt',
-    เกม: 159,
-    แพ็คเก็จ: 6.0,
-    ไอดีเกม: 24,
-    วันสั่งซื้อ: 4.0,
-    ราคา: 87,
-    สถานะ: '14%',
-  },
-  {
-    เลขใบสั่งซื้อ: 'Frozen Yogurt',
-    เกม: 159,
-    แพ็คเก็จ: 6.0,
-    ไอดีเกม: 24,
-    วันสั่งซื้อ: 4.0,
-    ราคา: 87,
-    สถานะ: '14%',
-  }
-]
 export default defineComponent({
-        setup(){
-            return { rows }
+  setup() {
+    const accountPinia = useOnsaveAccount();
+    const account = computed(() => accountPinia.account);
+    const userData = ref();
 
-        }
-})
+    onMounted(async () => {
+      userData.value = await fetchNotification();
+      if (account.value?.email == "admin@gmail.com") {
+        return (userData.value = userData.value.request.filter(
+          (x) => x.payload.email
+        ));
+        userData.value;
+      } else {
+        userData.value = userData.value.request.filter(
+          (x) => x.payload.email == account.value?.email
+        );
+      }
+    });
+    return { userData, account };
+  },
+});
 </script>
 
-<style>
-
-</style>
+<style></style>
