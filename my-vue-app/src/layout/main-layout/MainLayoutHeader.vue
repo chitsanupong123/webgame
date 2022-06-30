@@ -18,6 +18,12 @@
           rounded
           label="admin"
         />
+         <q-btn
+          v-if="account?.email == 'admin@gmail.com'"
+          @click="$router.push({ path: 'setpriceadmin' })"
+          rounded
+          label="ตั้งค่าแพ็คเก็จ"
+        />
       </div>
       <div class="ml-auto flex gap-5">
         <div v-if="account">

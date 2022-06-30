@@ -70,7 +70,6 @@ const createPaymentRequest = async (payload) => {
 };
 
 const createNotification = async (payload) => {
-  // console.log("sdassd");
   await addDoc(collection(db, "notifications"), { payload });
 };
 
@@ -84,10 +83,16 @@ const fetchPrice = async () =>{
  
 }
 
+const createSetPrice = async (payload) => {
+  await addDoc(collection(db, "price"), { payload });
+};
+
 const deletePaymentRequest = async (id) => {
   await deleteDoc(doc(db, "Admin", id));
-  // await setDoc(doc(db, "timeline"), payload);
-  // console.log("successed");
+};
+
+const deleteSetProce = async (id) => {
+  await deleteDoc(doc(db, "price", id));
 };
 
 const fetchPaymentRequestData = async () => {
@@ -106,12 +111,11 @@ const fetchNotification = async () => {
   return { request };
 };
 
-export { auth, LoginWithFirebase, RegistWithFirebase , createPaymentRequest 
+export { auth, LoginWithFirebase, RegistWithFirebase,deleteSetProce ,createSetPrice, createPaymentRequest 
   ,fetchPaymentRequestData,createNotification,fetchNotification ,deletePaymentRequest , fetchPrice};
 
 // pinia----------------------------
 const pinia = createPinia();
-console.log("Test");
 const myApp = createApp(App);
 myApp.use(pinia);
 myApp.use(router);

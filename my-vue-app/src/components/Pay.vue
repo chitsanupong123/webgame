@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-full mx-auto ">
+  <div class="max-w-full mx-auto" v-if="item">
     <q-btn @click="onSelectedMenu('mastercard')" dense flat label=""
       ><img
         src="imge/mastercard.png"
@@ -23,7 +23,7 @@
         class="w-[200px] rounded-[30px]"
     /></q-btn>
     <div class="flex flex-row gap-96">
-      <div class="q-pa-md my-16 ">
+      <div class="q-pa-md my-16">
         <q-option-group :options="options" type="radio" v-model="group" />
       </div>
       <div class="my-16">
@@ -60,9 +60,9 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import { useQuasar, QSpinnerGears } from "quasar";
-import { createPaymentRequest } from "../main";
+import { createPaymentRequest, fetchPrice } from "../main";
 export default defineComponent({
   props: {
     account: { type: Object, default: () => {} },
@@ -73,10 +73,52 @@ export default defineComponent({
     const text = ref("");
     const Idgame = ref("");
     const group = ref(null);
+    const SetPrice = ref();
+    const item = ref();
+    const options = ref()
+
+    onMounted(async() => {
+      SetPrice.value = await fetchPrice();
+      item.value = SetPrice.value.priceRequest.filter(
+        (x) => x?.payload.payment == "mastercard"
+      );
+      options.value = [
+        { label: item.value[0].payload.price[0], value: item.value[0].payload.price[0], color: "black" },
+        { label: item.value[0].payload.price[1], value: item.value[0].payload.price[1], color: "black" },
+        { label: item.value[0].payload.price[2], value: item.value[0].payload.price[2], color: "black" },
+      ]
+    });
 
     const onSelectedMenu = (onSelected) => {
       selected.value = onSelected;
-      console.log(selected.value);
+      if (selected.value == "mastercard") {
+        item.value = SetPrice.value.priceRequest.filter(
+          (x) => x.payload.payment == selected.value
+        );
+        options.value = [
+        { label: item.value[0].payload.price[0], value: item.value[0].payload.price[0], color: "black" },
+        { label: item.value[0].payload.price[1], value: item.value[0].payload.price[1], color: "black" },
+        { label: item.value[0].payload.price[2], value: item.value[0].payload.price[2], color: "black" },
+      ]
+      } else if (selected.value == "true") {
+        item.value = SetPrice.value.priceRequest.filter(
+          (x) => x.payload.payment == selected.value
+        );
+        options.value = [
+        { label: item.value[0].payload.price[0], value: item.value[0].payload.price[0], color: "black" },
+        { label: item.value[0].payload.price[1], value: item.value[0].payload.price[1], color: "black" },
+        { label: item.value[0].payload.price[2], value: item.value[0].payload.price[2], color: "black" },
+      ]
+      } else {
+        item.value = SetPrice.value.priceRequest.filter(
+          (x) => x.payload.payment == selected.value
+        );
+        options.value = [
+        { label: item.value[0].payload.price[0], value: item.value[0].payload.price[0], color: "black" },
+        { label: item.value[0].payload.price[1], value: item.value[0].payload.price[1], color: "black" },
+        { label: item.value[0].payload.price[2], value: item.value[0].payload.price[2], color: "black" },
+      ]
+      }
     };
     const $q = useQuasar();
     const showCustom = async () => {
@@ -122,24 +164,17 @@ export default defineComponent({
         payment_id: text.value,
         price: group.value,
       };
-      console.log(information);
       await createPaymentRequest(information);
     };
     return {
+      item,
       Idgame,
       showCustom,
       selected,
       onSelectedMenu,
       text,
       group,
-
-      options: [
-        { label: "$50", value: 50, color: "black" ,label:"คูปองx100"},
-        { label: "$100", value: 100, color: "black" },
-        { label: "$150", value: 150, color: "black" },
-        { label: "$200", value: 200, color: "black" },
-        { label: "$300", value: 300, color: "black" },
-      ],
+      options
     };
   },
 });

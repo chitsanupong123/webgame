@@ -4,8 +4,7 @@
       <div class="font-black">การแจ้งเติมการเติมเงิน</div>
       <div
         class="flex flex-col mx-auto p-5 text-stone-900 text-lg  mt-5  w-full rounded-lg border-solid border-[3px] bg-white"
-        v-for="(data, index) in adminData?.paymentRequest"
-        :key="index"
+
       >
         <table
           class="border-separate border-spacing-2 border border-slate-400 bg-white w-full"
@@ -18,8 +17,10 @@
               <th class="border border-slate-300 ...">จำนวนเงิน</th>
               <th class="border border-slate-300 ...">วิธีการเติมเงิน</th>
               <th class="border border-slate-300 ...">หมายเลขการเติมเงิน</th>
+              <th class="border border-slate-300 ...">หมายเหตุ</th>
             </tr>
-            <tr>
+            <tr  v-for="(data, index) in adminData?.paymentRequest"
+        :key="index">
               <td class="border border-slate-300 ...">
                 {{ data.payload.customer_name }}
               </td>
@@ -38,13 +39,7 @@
               <td class="border border-slate-300 ...">
                 {{ data.payload.payment_id }}
               </td>
-            </tr>
-          </thead>
-        </table>
-        <tr>
-          <div class="w-full">
-            <div class="bg-[#0d1b2a] text-[#FFFFFF]  flex justify-center">
-              <q-btn
+              <td class="border border-slate-300 ..."> <q-btn
                 label="ยืนยัน"
                 class=""
                 @click="
@@ -54,8 +49,7 @@
                     data.id
                   )
                 "
-              /></div>
-              <div class="bg-[#0d1b2a] text-[#FFFFFF]  flex justify-center">
+              />
               <q-btn
                 label="ยกเลิก"
                 class=""
@@ -66,8 +60,11 @@
                     data.id
                   )
                 "
-              /></div>
-            </div>
+              /></td>
+            </tr>
+          </thead>
+        </table>
+        <tr>
           </tr>
       </div>
     </div>
@@ -93,7 +90,6 @@ export default defineComponent({
         email: email,
         payment_id: payment_id,
       };
-      console.log(status);
       $q.dialog({
         title: "ยืนยันการทำรายการนีั้สำเร็จ",
         message: "",
@@ -112,7 +108,6 @@ export default defineComponent({
         email: email,
         payment_id: payment_id,
       };
-      console.log(status);
       $q.dialog({
         title: "ไม่อนุมัติรายการนี้",
         message: "",

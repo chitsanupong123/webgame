@@ -81,7 +81,6 @@ export default defineComponent({
           uid: regist.user.uid,
         };
         accountPinia.onSaveAccount(userDetail);
-        console.log(regist);
       } catch (e) {
         alert(e);
       }
