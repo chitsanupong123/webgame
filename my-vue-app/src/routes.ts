@@ -65,6 +65,11 @@ const routes: RouteRecordRaw[] = [
         path: 'setpriceadmin',
         component: () => import('../src/pages/Setpriceadmin.vue'),
       },
+      {
+        name: 'Setprices',
+        path: 'setprices',
+        component: () => import('../src/pages/Setprices.vue'),
+      },
     ],
   },
 ]

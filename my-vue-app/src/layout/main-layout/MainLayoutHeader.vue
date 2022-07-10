@@ -20,7 +20,7 @@
         />
          <q-btn
           v-if="account?.email == 'admin@gmail.com'"
-          @click="$router.push({ path: 'setpriceadmin' })"
+          @click="$router.push({ path: 'setprices' })"
           rounded
           label="ตั้งค่าแพ็คเก็จ"
         />

@@ -38,7 +38,7 @@
               </tr>
             </thead>
           </table>
-        </div>
+        </div>ata
       </div>
       <div v-else><span>ยังไม่มีรายการ</span></div>
     </div>

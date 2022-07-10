@@ -48,7 +48,6 @@ const LoginWithFirebase = async (email, password) => {
     alert(e);
   }
 };
-
 const RegistWithFirebase = async (email, password, name) => {
   try {
     const provider = await firebaseAuth.createUserWithEmailAndPassword(
@@ -85,6 +84,7 @@ const fetchPrice = async () =>{
 
 const createSetPrice = async (payload) => {
   await addDoc(collection(db, "price"), { payload });
+  
 };
 
 const deletePaymentRequest = async (id) => {
@@ -93,6 +93,8 @@ const deletePaymentRequest = async (id) => {
 
 const deleteSetProce = async (id) => {
   await deleteDoc(doc(db, "price", id));
+//  const delDoc =  await deleteDoc(doc(db, "price", id));
+//  console.log('12345'+delDoc);
 };
 
 const fetchPaymentRequestData = async () => {

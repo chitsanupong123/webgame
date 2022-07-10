@@ -1,7 +1,6 @@
 <template>
   <q-page class="bg-[#778DA9]">
     <div v-if="item" class="max-w-screen-xl w-full mx-auto">
-      {{SetPrice}}
       <q-btn @click="onSelectedMenu('mastercard')" dense flat label=""
         ><img
           src="imge/mastercard.png"
@@ -23,18 +22,18 @@
           :style="selected == 'garena' ? 'width:250px;height250px' : ''"
           class="w-[200px] rounded-[30px]"
       /></q-btn>
-        <q-btn
-          unelevated
-          icon="home"
-          @click="addPrices(index)"
-          label="เพิ่ม"
-          style="
-            background-color: #a4a4a4;
-            fontweight: 900;
-            color: white;
-            border-radius: 8px;
-          "
-        />
+      <q-btn
+        unelevated
+        icon="home"
+        @click="addPrices(index)"
+        label="เพิ่ม"
+        style="
+          background-color: #a4a4a4;
+          fontweight: 900;
+          color: white;
+          border-radius: 8px;
+        "
+      />
       <q-input
         type="number"
         rounded
@@ -82,16 +81,12 @@ export default defineComponent({
     const text = ref("");
     const item = ref();
     const id = ref("");
-    // const pricesdata = "";
-    // const currentInput = "";
-    
-    
 
-    const onSelectedMenu = (onSelected) => {
+     const onSelectedMenu = (onSelected) => {
       selected.value = onSelected;
       if (selected.value == "mastercard") {
         item.value = SetPrice.value.priceRequest.filter(
-          (x) => x.payment == selected.value
+          (x) => x.payload.payment == selected.value
         );
       } else if (selected.value == "true") {
         item.value = SetPrice.value.priceRequest.filter(
@@ -117,13 +112,16 @@ export default defineComponent({
       id.value = item[0].id;
       await deleteSetProce(id.value);
       await createSetPrice(mapItem);
+      await fetchSetPrice();
     };
 
     const fetchSetPrice = async () => {
       SetPrice.value = await fetchPrice();
+    // console.log(SetPrice.value); 
       item.value = SetPrice.value.priceRequest.filter(
-        (x) => x?.payload == "mastercard"
+        (x) => x?.payload.payment == selected.value
       );
+    //   console.log(item.value);
     };
 
     // const addPrices = async (index) => {
@@ -135,7 +133,9 @@ export default defineComponent({
       fetchSetPrice();
     });
     return { selected, onSelectedMenu, SetPrice, text, item, onSummit };
+  
   },
 });
 </script>
 
+<style></style>
